@@ -12,7 +12,9 @@ if (!isset($_GET['requirement_details'])) {
     // $required_students = $conn->query($sql) or die($conn->error);
     // $row = $required_students->fetch_assoc();
 
-    $required_students = $db->query("SELECT * FROM requirement_view WHERE requirement_details = $requirement_details");
+    $studentNoRequirementsQuery = "SELECT * FROM view_clearance WHERE student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details')";
+    $runStudentNoRequirementsQuery = mysqli_query($conn, $studentNoRequirementsQuery);
+    $rowStudentNoRequirementsQuery = mysqli_fetch_assoc($runStudentNoRequirementsQuery);
 }
 
 
@@ -27,7 +29,7 @@ if (!isset($_GET['requirement_details'])) {
         <div class="first-main-content-container">
             <div class="forms">
                 <span class="title">
-                    <h2>List of Students required by this requirement: <?php echo $requirement_details ?></h2>
+                    <h2>List of Students who doesn't a <?= $requirement_details;?> requirement yet:</h2>
                 </span>
                 <br>
                 <table id="required-students" class="display" style="width:100%">
@@ -42,7 +44,7 @@ if (!isset($_GET['requirement_details'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($required_students as $required_student) : ?>
+                        <?php foreach ($rowStudentNoRequirementsQuery as $noRequirementStudents) : ?>
                             <?php $signing_office_id = ($required_student->office_id == $_SESSION['office_id'])?$required_student->signing_office_id:null ?>
                             <?php 
                                 $query = "SELECT * FROM view_clearance WHERE clearance_type_id = ".$required_student->clearance_type_id." AND clearance_progress_id =".$required_student->clearance_progress_id." AND student_id = '$required_student->student_id'";
@@ -59,24 +61,7 @@ if (!isset($_GET['requirement_details'])) {
                                 <td><?= $required_student->student_first_name; ?></td>
                                 <td><?= $required_student->student_last_name ?></td>
                                 <td class="overall-clearance-status"><?= $required_student->is_complied ? 'Cleared' : 'Not Cleared'; ?></td>
-                                <td>
-                                        <?php if($signing_office_id != null): ?>
-                                            <form action="update_status_required_student.php" method="POST">
-                                                <input type="hidden" name="requirement_id" value="<?= $required_student->requirement_id; ?>"> 
-                                                <input type="hidden" name="signing_office_id" value="<?= $required_student->signing_office_id; ?>">
-                                                <input type="hidden" name="clearance_type_id" value="<?= $required_student->clearance_type_id; ?>">
-                                                <input type="hidden" name="clearance_progress_id" value="<?= $required_student->clearance_progress_id; ?>">
-                                                <input type="hidden" name="student_id" value="<?= $required_student->student_id; ?>">
-                                                <input type="hidden" name="requirement_details" value="<?= $requirement_details; ?>">
-                                                <input type="hidden" name="clearance_id" value="<?= $clearance_id; ?>">
-                                                <?php if($required_student-> status == "Inactive") :?>
-                                                    <button type="submit" name="approve" class="view-link" value="Get Current Date">Cleared</button>
-                                                <?php endif; ?>
-                                            </form>
-                                        <?php endif; ?>
-                                        <button type="button" name="approve" class="view-link remove-student" style="background-color: red;" value="<?= $required_student->student_id; ?>">Remove Student</button>
 
-                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -92,26 +77,8 @@ if (!isset($_GET['requirement_details'])) {
 <script>
     $(document).ready(function() {
         $('#required-students').DataTable();
-
-        $(".remove-student").click(function(){
-            var student_id = $(this).val();
-            console.log(student_id);
-            $.ajax({
-                url: "remove_student.php",
-                type: "POST",
-                data: {
-                    student_id: student_id,
-                    requirement_details: <?= $requirement_details; ?>
-                },
-                success: function(data){
-                    alert(data);
-                    location.reload();
-                }
-            });
-        });
     });
 </script>
-
 
 </body>
 

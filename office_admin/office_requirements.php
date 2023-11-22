@@ -1,5 +1,5 @@
 <?php
-include_once '../connection.php';
+include_once 'connection.php';
 include_once 'office_header.php';
 // $order_by = "ASC";
 
@@ -8,9 +8,18 @@ include_once 'office_header.php';
 
 
 
-$requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
+$requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Active" AND office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
 
-include_once 'connection.php';
+// $getRequirementQuery = "SELECT * FROM requirement_view WHERE office_id = " . $_SESSION['office_id'] . " GROUP BY requirement_details ORDER BY requirement_details ASC";
+// $getRequirementResult = mysqli_query($conn, $getRequirementQuery);
+
+// $requirements_details = [];
+// if(mysqli_num_rows($getRequirementResult) > 0 ){
+//     while($getRequirementRow = mysqli_fetch_assoc($getRequirementResult)){
+//         $requirements_details[] = $getRequirementRow['requirement_details'];
+//     }
+// }
+
 
 // $office_id = $_SESSION['office_id'];
 // $sql = "SELECT * FROM new_signing_offices WHERE office_id = '$office_id'";
@@ -73,7 +82,9 @@ include_once 'connection.php';
                                 <td><?= $requirement->clearance_type_name; ?></td>
                                 <td><?= $requirement->school_year_and_sem . ' ' . $requirement->sem_name; ?></td>
                                 <td class='primary table-action-container'>
+                                    <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$requirement->requirement_details; ?>','edit-requirement-modal')">Edit Requirement</button>
                                     <a class='view-link' href='required_students_view.php?requirement_details="<?= $encodedValue; ?>"'>View Required Students</a>
+                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>">Students No requirements received</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -97,20 +108,22 @@ include_once 'connection.php';
 </div>
 
 
-<div class="modal" id="csv-download-modal">
+
+<div class="modal" id="edit-requirement-modal" style="width: 350px;">
     <div class="modal-header">
-        <div class="title">CSV Format Guide and Download File</div>
+        <div class="title">Edit Requirements</div>
         <button data-close-button class="close-button">&times;</button>
     </div>
     <div class="requirements-modal-body">
-        <div>
-            <h3 style="margin-bottom: 5px;">Guide for inputting requirement details</h3>
-            <img src="../images/requirement_office_guide.png" alt="">
+        <div class="input">
+            <label for="">Requirement Details:</label>
+            <input type="hidden" id="old_requirement">
+            <textarea name="" id="requirement_details" cols="30" rows="5" placeholder="Requirement Description"></textarea>
         </div>
-
-        <a style="align-self: flex-end;" class="download-csv" href="../csv/requirements_csv_format.csv" download="Student Requirements">Download CSV Format</a>
+        <button type="submit" name="update_requirements" class="create-clearance" id="bulk-update-requirement">Update</button>
     </div>
 </div>
+<div id="overlay"></div>
 
 
 
@@ -121,7 +134,44 @@ include_once 'connection.php';
 <script src="../assets/js/office_admin_index.js"></script>
 
 <script>
-    $()
+    function getRequirements(requirement_details,modal){
+        $("#requirement_details").val(requirement_details);
+        $("#old_requirement").val(requirement_details);
+        $.ajax({
+            url: "get_requirement.php",
+            method: "POST",
+            data: {
+                requirement_details: requirement_details
+            },
+            success: function(response,status) {
+                console.log(response);
+                $("#" + modal).addClass("active");
+            }
+        });
+    }
+
+    $("#bulk-update-requirement").click(function(){
+    var old_requirement = $("#old_requirement").val();
+    var requirement_details = $("#requirement_details").val();
+    console.log(old_requirement);
+    console.log(requirement_details);
+
+    $.ajax({
+        url: "update_requirement.php",
+        method: "POST",
+        data: {
+            old_requirement: old_requirement,
+            requirement_details: requirement_details,
+        },
+        success: function(response,status) {
+            if(response == "success"){
+                $("#edit-requirement-modal").removeClass("active");
+                location.reload();
+            }
+        }
+    });
+});
+
 </script>
 
 <script>
