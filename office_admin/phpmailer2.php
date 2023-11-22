@@ -34,10 +34,10 @@ function sendEmail($email, $subject, $message) {
 
         if(is_array($email)){
             foreach($email as $e){
-                $mail->addAddress($e, 'ICST');     //Add a recipient
+                $mail->addAddress($e, );     //Add a recipient
             }
         }else{
-            $mail->addAddress($email, 'ICST');     //Add a recipient
+            $mail->addAddress($email, );     //Add a recipient
         }
 
         // Email content

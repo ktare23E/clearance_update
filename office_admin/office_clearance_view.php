@@ -125,7 +125,7 @@
                                                 <input type="hidden" name="student_id" value="<?= $user->student_id; ?>">
                                                 <input type="hidden" name="clearance_id" value="<?= $row['clearance_id']; ?>">
                                                 <?php if($status == "Inactive") :?>
-                                                    <button type="submit" name="approve" class="view-link" value="Get Current Date">Cleared</button>
+                                                    <button type="submit" name="approve" class="view-link <?php echo $user->is_complied ? 'hidden-button' : ''; ?>" value="Get Current Date">Cleared</button>
                                                 <?php endif; ?>
                                             </form>
                                         <?php endif; ?>
@@ -151,7 +151,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- <script src="../assets/js/update.js"></script> -->
 
-    <script>
+    <!-- <script>
         $(document).ready(function () {
 
             $("#show-clearance-insights").click(function(){
@@ -164,6 +164,17 @@
         });
 
 
+    </script> -->
+    <script>
+        $(document).ready(function () {
+            // Add this script to hide the button when is_complied is true
+            $('.overall-clearance-status:contains("Cleared")').closest('tr').find('.hidden-button').hide();
+            
+            // $("#show-clearance-insights").click(function(){
+            //     $("#clearance-insights").slideToggle();
+            // });
+        });
     </script>
+
 </body>
 </html>

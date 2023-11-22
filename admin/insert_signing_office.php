@@ -1,7 +1,7 @@
 <?php
 
 require ('../dbconnect.php');
-require ('phpmailer2.php');
+include_once 'phpmailer2.php';
 include_once '../connection.php';
 
 

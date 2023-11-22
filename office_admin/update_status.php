@@ -1,6 +1,6 @@
 <?php
     include_once '../connection.php';
-    require ('phpmailer.php');
+    require ('phpmailer2.php');
 
 if(isset($_POST['approve'])){
         $clearance_type_id = $_POST['clearance_type_id'];

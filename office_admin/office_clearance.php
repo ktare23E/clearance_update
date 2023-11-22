@@ -429,7 +429,7 @@ $is_department = $row['is_department'];
             let requirement_details3 = $("#requirement_details3").val();
             let rows_selected = table.column(0).checkboxes.selected();
 
-            console.log(rows_selected);
+            // console.log(rows_selected);
 
             // console.log(rows_selected);
             // return
@@ -463,6 +463,7 @@ $is_department = $row['is_department'];
                         clearance_status: '0'
                     },
                     success: (response) => {
+                        console.log(response);
                         successfulResponses++; // increment the successful responses counter
                         if (response) {
 
