@@ -48,10 +48,6 @@ if (!isset($_GET['requirement_details'])) {
                                 $query = "SELECT * FROM view_clearance WHERE clearance_type_id = ".$required_student->clearance_type_id." AND clearance_progress_id =".$required_student->clearance_progress_id." AND student_id = '$required_student->student_id'";
                                 $result = mysqli_query($conn,$query);
                                 $row = mysqli_fetch_assoc($result);
-
-                                // print_r($row);
-                                // die();
-
                                 $clearance_id = $row['clearance_id'];
                             ?>
                             <tr>
@@ -69,13 +65,13 @@ if (!isset($_GET['requirement_details'])) {
                                                 <input type="hidden" name="student_id" value="<?= $required_student->student_id; ?>">
                                                 <input type="hidden" name="requirement_details" value="<?= $requirement_details; ?>">
                                                 <input type="hidden" name="clearance_id" value="<?= $clearance_id; ?>">
+                                                <button type="button" name="approve" class="view-link remove-student" style="background-color: red;" value="<?= $required_student->student_id; ?>">Remove</button>
                                                 <?php if($required_student-> status == "Inactive") :?>
                                                     <button type="submit" name="approve" class="view-link" value="Get Current Date">Cleared</button>
                                                 <?php endif; ?>
                                             </form>
                                         <?php endif; ?>
-                                        <button type="button" name="approve" class="view-link remove-student" style="background-color: red;" value="<?= $required_student->student_id; ?>">Remove Student</button>
-
+                                
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -92,8 +88,9 @@ if (!isset($_GET['requirement_details'])) {
 <script>
     $(document).ready(function() {
         $('#required-students').DataTable();
+    });
 
-        $(".remove-student").click(function(){
+    $(".remove-student").click(function(){
             var student_id = $(this).val();
             console.log(student_id);
             $.ajax({
@@ -109,7 +106,6 @@ if (!isset($_GET['requirement_details'])) {
                 }
             });
         });
-    });
 </script>
 
 

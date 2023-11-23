@@ -8,7 +8,7 @@ include_once 'office_header.php';
 
 
 
-$requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Active" AND office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
+$requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
 
 // $getRequirementQuery = "SELECT * FROM requirement_view WHERE office_id = " . $_SESSION['office_id'] . " GROUP BY requirement_details ORDER BY requirement_details ASC";
 // $getRequirementResult = mysqli_query($conn, $getRequirementQuery);
@@ -54,13 +54,6 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Activ
     <!-- ================ MAIN =================== -->
     <div class="main-requirements-container">
         <div class="first-main-content-container">
-
-
-
-
-
-
-
             <div class="form signup">
                 <span class="title">
                     <h2>List of Requirements of <?= $_SESSION['office_name']; ?></h2>
@@ -84,7 +77,7 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Activ
                                 <td class='primary table-action-container'>
                                     <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$requirement->requirement_details; ?>','edit-requirement-modal')">Edit Requirement</button>
                                     <a class='view-link' href='required_students_view.php?requirement_details="<?= $encodedValue; ?>"'>View Required Students</a>
-                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>">Students No requirements received</a>
+                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>">Students No requirements received</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -134,7 +127,8 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Activ
 <script src="../assets/js/office_admin_index.js"></script>
 
 <script>
-    function getRequirements(requirement_details,modal){
+
+    function getRequirements(requirement_details, modal) {
         $("#requirement_details").val(requirement_details);
         $("#old_requirement").val(requirement_details);
         $.ajax({
@@ -143,12 +137,13 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Activ
             data: {
                 requirement_details: requirement_details
             },
-            success: function(response,status) {
+            success: function (response, status) {
                 console.log(response);
                 $("#" + modal).addClass("active");
             }
         });
     }
+
 
     $("#bulk-update-requirement").click(function(){
     var old_requirement = $("#old_requirement").val();
@@ -171,6 +166,8 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE status = "Activ
         }
     });
 });
+
+
 
 </script>
 

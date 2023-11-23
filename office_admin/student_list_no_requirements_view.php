@@ -7,14 +7,37 @@ if (!isset($_GET['requirement_details'])) {
     echo "<h1>There's an error while viewing details.</h1>";
 } else {
     $requirement_details = $_GET['requirement_details'];
+    $clearance_progress_id = $_GET['clearance_progress_id'];
+    $is_department = $_SESSION['is_department'];
 
-    // $sql = "SELECT * FROM requirement_view WHERE requirement_details ='".$requirement_details."'";
-    // $required_students = $conn->query($sql) or die($conn->error);
-    // $row = $required_students->fetch_assoc();
+    if ($is_department == 0) {
+        $studentNoRequirementsQuery = "SELECT * FROM view_clearance WHERE student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details') AND clearance_progress_id = $clearance_progress_id";
+        $runStudentNoRequirementsQuery = mysqli_query($conn, $studentNoRequirementsQuery);
+        $students = [];
+        if(mysqli_num_rows($runStudentNoRequirementsQuery) > 0){
+            while($rowStudentNoRequirementsQuery = mysqli_fetch_assoc($runStudentNoRequirementsQuery)){
+                $students[] = $rowStudentNoRequirementsQuery;
+            }
+        }
+    } else {
+        $office_id = $_SESSION['office_id'];
+        $studentNoRequirementsQuery = "SELECT * FROM view_clearance WHERE student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details') AND office_id = $office_id AND clearance_progress_id = $clearance_progress_id";
+        // echo $studentNoRequirementsQuery;
+        // die();
+        $runStudentNoRequirementsQuery = mysqli_query($conn, $studentNoRequirementsQuery);
+        $students = [];
+        if(mysqli_num_rows($runStudentNoRequirementsQuery) > 0){
+            while($rowStudentNoRequirementsQuery = mysqli_fetch_assoc($runStudentNoRequirementsQuery)){
+                $students[] = $rowStudentNoRequirementsQuery;
+            }
+        }
 
-    $studentNoRequirementsQuery = "SELECT * FROM view_clearance WHERE student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details')";
-    $runStudentNoRequirementsQuery = mysqli_query($conn, $studentNoRequirementsQuery);
-    $rowStudentNoRequirementsQuery = mysqli_fetch_assoc($runStudentNoRequirementsQuery);
+        // var_dump($students);
+        // die();
+    }
+
+    // }
+    // $studentNoRequirementsQuery = $db->query("SELECT * FROM view_clearance WHERE student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details')");
 }
 
 
@@ -29,7 +52,7 @@ if (!isset($_GET['requirement_details'])) {
         <div class="first-main-content-container">
             <div class="forms">
                 <span class="title">
-                    <h2>List of Students who doesn't a <?= $requirement_details;?> requirement yet:</h2>
+                    <p>List of Students who doesn't have a <b><?= $requirement_details;?></b> requirement yet:</p>
                 </span>
                 <br>
                 <table id="required-students" class="display" style="width:100%">
@@ -38,30 +61,19 @@ if (!isset($_GET['requirement_details'])) {
                             <th>Student ID</th>
                             <th>Firstname</th>
                             <th>Lastname</th>
-                            <th>Status</th>
+
                             <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($rowStudentNoRequirementsQuery as $noRequirementStudents) : ?>
-                            <?php $signing_office_id = ($required_student->office_id == $_SESSION['office_id'])?$required_student->signing_office_id:null ?>
-                            <?php 
-                                $query = "SELECT * FROM view_clearance WHERE clearance_type_id = ".$required_student->clearance_type_id." AND clearance_progress_id =".$required_student->clearance_progress_id." AND student_id = '$required_student->student_id'";
-                                $result = mysqli_query($conn,$query);
-                                $row = mysqli_fetch_assoc($result);
-
-                                // print_r($row);
-                                // die();
-
-                                $clearance_id = $row['clearance_id'];
-                            ?>
+                        <?php foreach ($students as $student) : ?>
                             <tr>
-                                <td><?= $required_student->student_id; ?></td>
-                                <td><?= $required_student->student_first_name; ?></td>
-                                <td><?= $required_student->student_last_name ?></td>
-                                <td class="overall-clearance-status"><?= $required_student->is_complied ? 'Cleared' : 'Not Cleared'; ?></td>
-
+                                <td><?= $student['student_id']; ?></td>
+                                <td><?= $student['student_first_name']; ?></td>
+                                <td><?= $student['student_last_name'] ?></td>
+                             
+                                <td></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
