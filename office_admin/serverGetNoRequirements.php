@@ -64,24 +64,20 @@ session_start();
     
 
 $is_department = $_SESSION['is_department'];
+$requirement_details = $_SESSION['requirement_details'];
+$clearance_progress_id = $_SESSION['clearance_progress_id'];
+$office_id = $_SESSION['office_id'];
+$query1 = "student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details') AND clearance_progress_id = $clearance_progress_id";
+$query2 = "student_id NOT IN (SELECT student_id FROM requirement WHERE requirement_details = '$requirement_details') AND office_id = $office_id AND clearance_progress_id = $clearance_progress_id";
 
 if($is_department == 0){
-    // $where3 = "is_locked = 'No'";
-    // $data = SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $where3, "");
-    $data = SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns);
-
+    $where = $query1;
+    $data = SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $where, "");
 
 }else{
 
 
-    $where = "office_id=".$_SESSION['office_id'];
-    
-    // $where = "office_id=".$_SESSION['office_id'].' AND is_locked = "No"';
-    // $office_id = $_SESSION['office_id'];
-    // echo $where;
-    // die();
-    // $data = SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $where, "");
-    // $data = SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns);
+    $where = $query2;
     $data = SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns, $where, "");
 
 
@@ -99,7 +95,7 @@ foreach($data['data'] as $i => $entry){
     }
     array_push($new_entry, "<td class='primary table-action-container'>
     <a class='view-link' href='office_clearance_view.php?clearance_type_id=".$entry[1]."&clearance_progress_id=".$entry[2]."&student_id=".$entry[4]."'>View</a>
-        <input type='hidden' name='student_id' value='".$entry[4]."'> 
+        <input type='hidden' name='student_id' value='".$entry[1]."'> 
     </td>");
     $data['data'][$i] = $new_entry;
 }

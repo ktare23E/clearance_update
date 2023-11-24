@@ -1,49 +1,11 @@
 <?php
 include_once 'connection.php';
 include_once 'office_header.php';
-// $order_by = "ASC";
-
-// $list_of_clearances = $db->result('requirement_view','status = "Active" AND office_id = '.$_SESSION['office_id'],'requirement_details = "'.$order_by.'"');
-
 
 
 
 $requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
 
-// $getRequirementQuery = "SELECT * FROM requirement_view WHERE office_id = " . $_SESSION['office_id'] . " GROUP BY requirement_details ORDER BY requirement_details ASC";
-// $getRequirementResult = mysqli_query($conn, $getRequirementQuery);
-
-// $requirements_details = [];
-// if(mysqli_num_rows($getRequirementResult) > 0 ){
-//     while($getRequirementRow = mysqli_fetch_assoc($getRequirementResult)){
-//         $requirements_details[] = $getRequirementRow['requirement_details'];
-//     }
-// }
-
-
-// $office_id = $_SESSION['office_id'];
-// $sql = "SELECT * FROM new_signing_offices WHERE office_id = '$office_id'";
-// $result = mysqli_query($conn,$sql);
-// $row = mysqli_fetch_assoc($result);
-
-// $office_name = $row['office_name'];
-
-// $query = "SELECT * FROM requirement_view WHERE status = 'Active' AND office_id = '$office_id' ORDER BY requirement_details";
-
-// // echo $query;
-// // die();
-// $result2 = mysqli_query($conn,$query);
-// $row2 = mysqli_fetch_assoc($result2);
-
-// var_dump($row2);
-// die();
-
-// var_dump($row2);
-// die();
-
-
-
-// $signing_office_id = $row['signing_office_id'];
 ?>
 <div class="office-container">
     <?php
@@ -54,11 +16,12 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' .
     <!-- ================ MAIN =================== -->
     <div class="main-requirements-container">
         <div class="first-main-content-container">
+            <span class="">
+                <h2 style="text-align: center;">List of Requirements of <?= $_SESSION['office_name']; ?></h2>
+            </span>
             <div class="form signup">
-                <span class="title">
-                    <h2>List of Requirements of <?= $_SESSION['office_name']; ?></h2>
-                </span>
-                <table>
+                
+                <table id="myTable" class="row-border" style="width:100%">
                     <thead>
                         <tr>
                             <th>Requirements</th>
@@ -75,9 +38,9 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' .
                                 <td><?= $requirement->clearance_type_name; ?></td>
                                 <td><?= $requirement->school_year_and_sem . ' ' . $requirement->sem_name; ?></td>
                                 <td class='primary table-action-container'>
-                                    <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$requirement->requirement_details; ?>','edit-requirement-modal')">Edit Requirement</button>
-                                    <a class='view-link' href='required_students_view.php?requirement_details="<?= $encodedValue; ?>"'>View Required Students</a>
-                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>">Students No requirements received</a>
+                                    <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$requirement->requirement_details; ?>','edit-requirement-modal')">Edit</button>
+                                    <a class='view-link' href='required_students_view.php?requirement_details="<?= $encodedValue; ?>"&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>&clearance_type_id=<?= $requirement->clearance_type_id; ?>'>Required Students</a>
+                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>">Students No requirements</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -127,6 +90,10 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' .
 <script src="../assets/js/office_admin_index.js"></script>
 
 <script>
+    //datatable
+    new DataTable('#myTable', {
+    order: [[2, 'desc']]
+});  
 
     function getRequirements(requirement_details, modal) {
         $("#requirement_details").val(requirement_details);

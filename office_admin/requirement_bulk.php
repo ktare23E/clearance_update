@@ -131,24 +131,24 @@
 
     echo $success_counter;
 
-    // Insert emails and messages into the email table
-    for($i = 0; $i < count($emails); $i++) {
-        $email = $emails[$i];
-        $message = $messages[$i];
+    // // Insert emails and messages into the email table
+    // for($i = 0; $i < count($emails); $i++) {
+    //     $email = $emails[$i];
+    //     $message = $messages[$i];
 
-        $insertQuery = "INSERT INTO email (email, message) VALUES ('$email', '$message')";
-        mysqli_query($conn, $insertQuery);
-    }
+    //     $insertQuery = "INSERT INTO email (email, message) VALUES ('$email', '$message')";
+    //     mysqli_query($conn, $insertQuery);
+    // }
 
-    // Define the chunk size
-    $chunk_size = 100;
+    // // Define the chunk size
+    // $chunk_size = 100;
 
-    // Loop through the $emails array in chunks
-    for ($i = 0; $i < count($emails); $i += $chunk_size) {
-        // Get a subset of the $emails array
-        $email_chunk = array_slice($emails, $i, $chunk_size);
+    // // Loop through the $emails array in chunks
+    // for ($i = 0; $i < count($emails); $i += $chunk_size) {
+    //     // Get a subset of the $emails array
+    //     $email_chunk = array_slice($emails, $i, $chunk_size);
 
-        // Send the emails in the current chunk
-        sendEmail($email_chunk, "Online Clearance System", $message);
-    }
+    //     // Send the emails in the current chunk
+    //     sendEmail($email_chunk, "Online Clearance System", $message);
+    // }
 ?>

@@ -43,7 +43,6 @@
                                     <th>School year and sem</th>
                                     <th>Clearance Type</th>
                                     <th>Status</th>
-                                    <th>Remarks</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -53,7 +52,6 @@
                                     <td><?= $clearance->school_year_and_sem." ".$clearance->sem_name; ?></td>
                                     <td><?= $clearance->clearance_type_name; ?></td>
                                     <td><?= $clearance->clearance_status ? 'Cleared' : 'Not Cleared';?></td>
-                                    <td>Done</td>
                                     <td class="primary table-action-container">
                                     <a class="primary view-link" href="office_clearance_view.php?student_id=<?= $clearance->student_id?>&clearance_type_id=<?= $clearance->clearance_type_id; ?>&clearance_progress_id=<?= $clearance->clearance_progress_id; ?>">View Details</a>
                                     </td>

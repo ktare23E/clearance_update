@@ -251,7 +251,13 @@
                     { 
                         target: 10,
                         render: function (data, type, row) {
-                            return (data==1 ? 'Cleared' : 'Not Cleared');
+                            let color = '';
+                            if(data == 1){
+                                color = 'green';
+                            } else if(data == 0){
+                                color = 'red';
+                            }
+                            return '<span style="color: '+color+';">'+(data == 1 ? 'Cleared' : 'Not Cleared')+'</span>';
                         },
                     }
                 ],

@@ -3,34 +3,15 @@
 include_once 'office_header.php';
 
 include_once '../connection.php';
-$is_department = $_SESSION['is_department'];
 $office_id = $_SESSION['office_id'];
-$where = "";
+
 
 
     if (isset($_POST['submit'])) {
         $clearance_progress_id = $_POST['clearance_progress_id'];
         $course_id = $_POST['course_id'];
         $year_level = $_POST['student_year'];
-        // $office_id = $_POST['office_id'];
-
-        // $sql = "SELECT * FROM course WHERE course_id = $course_id";
-
-        // $result2 = mysqli_query($conn, $sql);
-        // $row3 = mysqli_fetch_assoc($result2);
-
-        // // $office_ids = $row3['office_id'];
-
-
-    // $query = "SELECT * FROM view_clearance WHERE clearance_progress_id = $clearance_progress_id";
-    // $result = mysqli_query($conn, $query);
-    // $row = mysqli_fetch_assoc($result);
-
-        // if($_SESSION['is_department'] == 1) {
-        //     $query = "SELECT * FROM office WHERE is_department = 1 AND office_id = $office_id";
-        // } else {
-        //     $query = "SELECT * FROM office WHERE is_department = 1";
-        // }
+    
 
         $q = "SELECT * FROM view_clearance WHERE clearance_progress_id = $clearance_progress_id";
 
@@ -50,17 +31,6 @@ $where = "";
 
         $school_year_and_sem = $row2['school_year_and_sem'];  
         $sem_name = $row2['sem_name'];
-
-        // $result = mysqli_query($conn, $query);
-
-        // $departments = array();
-        
-        // while($row = mysqli_fetch_assoc($result)) {
-        //     array_push($departments,$row);
-        // }
-        
-        // print_r($departments);
-        // die();
 
         $num_of_cleared = 0;
         $number_not_cleared = 0;
@@ -82,7 +52,7 @@ $where = "";
                     <div class="report-table-container">
                         <h3 class="text-muted">List of students of </h3>
                         <!-- <h3><?= $department['office_name'] ?></h3> -->
-                        <table style="width: 100%;">
+                        <table  style="width: 100%;">
                             <thead>
                                 <th>Student Name</th>
                                 <th>Course</th>
@@ -125,10 +95,10 @@ $where = "";
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Approved', 'Not Cleared'],
+                labels: ['Cleared', 'Not Cleared'],
                 datasets: [{
                     label: 'Requirement Complied',
-                    data: [<?= $num_of_cleared; ?>, <?= $number_not_cleared?>],
+                    data: [<?= $num_of_cleared; ?>, <?= $number_not_cleared; ?>],
                     borderWidth: 1,
                     backgroundColor: ['rgb(2, 114, 2)', 'rgb(211, 5, 5)']
                 }]

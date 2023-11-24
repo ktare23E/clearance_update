@@ -264,7 +264,7 @@ $is_department = $row['is_department'];
 
 <script src="../assets/js/cdn.js"></script>
 
-<script>
+<!-- <script>
     //jquery onclick event for update button
     $(document).on("click", '#active', function() {
         let requirement_id = [];
@@ -289,7 +289,7 @@ $is_department = $row['is_department'];
             }
         })
     });
-</script>
+</script> -->
 
 <!-- <script type="text/javascript">
     $(document).ready(function() {
@@ -318,21 +318,21 @@ $is_department = $row['is_department'];
 
 
 <script>
-    $(function() {
-        loadClearance();
+    // $(function() {
+    //     loadClearance();
 
-    });
+    // });
 
-    function loadClearance() {
-        $.ajax({
-            url: 'get_all_clearance.php',
-            type: 'POST',
-            success: function(response) {
-                let res = $.parseJSON(response);
-                console.log(res);
-            }
-        });
-    }
+    // function loadClearance() {
+    //     $.ajax({
+    //         url: 'get_all_clearance.php',
+    //         type: 'POST',
+    //         success: function(response) {
+    //             let res = $.parseJSON(response);
+    //             console.log(res);
+    //         }
+    //     });
+    // }
 
     $(document).ready(function() {
         var table = $('#example').DataTable({
@@ -352,27 +352,56 @@ $is_department = $row['is_department'];
                     'checkboxes': {
                         'selectRow': true
                     }
-                }, {
+                }, 
+                    {
                     target: 1,
                     visible: false,
                     searchable: false,
-                }, {
+                }, 
+                    {
                     target: 3,
                     visible: false,
                     searchable: false,
                 },
-                {
+                    {
                     target: 2,
                     visible: false,
                 },
-                {
+                    {
+                    target:10,
+                    render: function(data){
+                        let fontType = 'bold'
+                        return '<span style="font-weight: '+fontType+';">'+data+'</span>';
+                    }
+                },
+                    {
+                    target: 11,
+                    render: function(data){
+                        let fontType = 'bold'
+                        return '<span style="font-weight: '+fontType+';">'+data+'</span>';
+                    }
+                },
+                    {
+                    target: 12,
+                    render: function(data){
+                        let fontType = 'bold'
+                        return '<span style="font-weight: '+fontType+';">'+data+'</span>';
+                    }
+                },
+                    {
                     target: 14,
                     visible: false,
                 },
                 {
                     target: 13,
                     render: function(data, type, row) {
-                        return (data == 1 ? 'Cleared' : 'Not Cleared');
+                        let color = '';
+                        if(data == 1){
+                            color = 'green';
+                        } else if(data == 0){
+                            color = 'red';
+                        }
+                        return '<span style="color: '+color+';">'+(data == 1 ? 'Cleared' : 'Not Cleared')+'</span>';
                     },
                 }
             ],
@@ -493,12 +522,11 @@ $is_department = $row['is_department'];
                     }
                 });
             }
-
-
         });
+
         $(document).on('click', '#checkAll', function() {
-            ;
             let rows_selected = table.column(0).checkboxes.selected();
+            console.log(rows_selected);
             rows_selected.map(function(elem) {
                 console.log(elem);
             });
