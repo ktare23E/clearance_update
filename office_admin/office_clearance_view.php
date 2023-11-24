@@ -20,7 +20,6 @@
 
         $status = $row['status'];
     }
-
     $signing_office_id = null;
 ?>
 <div class="office-container">
@@ -124,7 +123,7 @@
                                                 <input type="hidden" name="clearance_progress_id" value="<?= $user->clearance_progress_id; ?>">
                                                 <input type="hidden" name="student_id" value="<?= $user->student_id; ?>">
                                                 <input type="hidden" name="clearance_id" value="<?= $row['clearance_id']; ?>">
-                                                <?php if($status == "Inactive") :?>
+                                                <?php if($status == "Inactive" &  $user->officer_requirement == $_SESSION['is_officer'] ) :?>
                                                     <button type="submit" name="approve" class="view-link <?php echo $user->is_complied ? 'hidden-button' : ''; ?>" value="Get Current Date">Cleared</button>
                                                 <?php endif; ?>
                                             </form>

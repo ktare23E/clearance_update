@@ -17,6 +17,7 @@
         $admin_password = $row['admin_password'];
         $office_id = $row['office_id'];
         $user_type = $row['user_type'];
+        $is_officer = $row['is_officer'];
 ?>
 
 <div class="container-student">
@@ -65,7 +66,7 @@
                                 </button>
                             </a>
                         </div>
-                        <span class="title">Edit Office Account Information</span>
+                        <span class="title">Edit Office Account Information <?= $is_officer; ?></span>
 
                     <form action="update_office_account.php" method="POST">
                         <div class="input-field-container">
@@ -74,19 +75,17 @@
                                 <input type="text" name="admin_name" placeholder="Admin Name" required value="<?php echo $admin_name; ?>">
                                 <i class="uil uil-user"></i>
                             </div>
-                        </div>
-                        <div class="input-field-container">
-                        <div class="input-field">
+                            <div class="input-field">
                                 <input type="text" name="admin_username" placeholder="Admin Username" required value="<?php echo $admin_username; ?>">
                                 <i class="uil uil-user"></i>
                             </div>
+                        </div>
+                        <div class="input-field-container">
                             <div class="input-field">
                                 <input type="password" name="admin_password" placeholder="Admin Password" required value="<?php echo $admin_password; ?>">
                                 <i class="uil uil-user"></i>
                             </div>
-                        </div>
-                        <div class="input-field-container">
-                        <div class="input-field">
+                            <div class="input-field">
                                     <label for="">Office Name</label>
                                     <select name="office_id" id="">
                                             <?php $offices = $db->result('office');?>
@@ -98,8 +97,10 @@
                                             <?php endif;?>
                                             <?php endforeach; ?>
                                     </select>
+                            </div>
                         </div>
-                        <div class="input-field">
+                        <div class="input-field-container">
+                                <div class="input-field">
                                     <label for="">User Type</label>
                                     <select name="user_type" id="">
                                         <?php if($user_type === 'Admin'):?>
@@ -112,6 +113,13 @@
                                         <?php else:?>
                                                 <option value="Office Admin">Office Admin</option>
                                             <?php endif;?>
+                                    </select>
+                                </div>
+                                <div class="input-field">
+                                    <label for="">Is Officer</label>
+                                    <select name="is_officer" id="">
+                                        <option value="Yes" <?= $is_officer === 'Yes' ? 'selected' : ''; ?>>Yes</option>
+                                        <option value="No" <?= $is_officer === 'No' ? 'selected' : ''; ?>>No</option>
                                     </select>
                                 </div>
                         </div>

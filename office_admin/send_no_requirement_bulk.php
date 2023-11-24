@@ -12,6 +12,7 @@
 
     $is_department = $_SESSION['is_department'];
     $office_id = $_SESSION['office_id'];
+    $officer_requirement = $_SESSION['is_officer'];
 
     //from AJAX
     $list_clearance_id = $_POST['list_clearance_id'];
@@ -48,6 +49,7 @@
                         'clearance_type_id' => $clearance_type_id,
                         'requirement_details' => $requirement_details,
                         'signing_office_id' => $signing_office_id,
+                        'officer_requirement' => $officer_requirement
                     );
 
                     $insert = $db->insert('requirement', $data);

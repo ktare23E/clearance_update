@@ -88,6 +88,14 @@
                                     <option value="Office Admin">Office Admin</option>
                                 </select>
                             </div>
+                            <div class="input-field">
+                                <i class="uil uil-bolt"></i>
+                                <select name="is_officer" id="" required>
+                                    <option value="">Is Officer</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
                         </div>
                             <div class="input-field button">
                                 <input type="submit" value="Create Account">

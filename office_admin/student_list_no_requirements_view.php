@@ -98,10 +98,10 @@ $is_department = $row['is_department'];
                 </div>
 
                 <div>
-                    <!-- <button class="create-clearance" data-modal-target="#bulk-requirements-modal">+ Requirements via CSV</button> -->
-                    <? if($status === 'Active'): ?>
+
+                    <?php if($status == 'Active'): ?>
                     <button class="create-requirements" style="background-color: orange;" id="bulk_requirements">+ Send <?= $requirement_details; ?> Requirements</button>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 

@@ -2,9 +2,17 @@
 include_once 'connection.php';
 include_once 'office_header.php';
 
+$officer_requirement = $_SESSION['is_officer'];
+
+$requirements = $db->query('SELECT * FROM requirement_view WHERE officer_requirement = '."'$officer_requirement'".' AND office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
+
+// $getRequirementsQuery = "SELECT * FROM requirement_view WHERE officer_requirement = '$officer_requirement' AND office_id = '" . $_SESSION['office_id'] . "' GROUP BY requirement_details ORDER BY requirement_details ASC";
+// $runRequirementsQuery = mysqli_query($conn, $getRequirementsQuery);
+// $requirements = mysqli_fetch_assoc($runRequirementsQuery)
 
 
-$requirements = $db->query('SELECT * FROM requirement_view WHERE office_id = ' . $_SESSION['office_id'] . ' GROUP BY requirement_details ORDER BY requirement_details ASC');
+
+
 
 ?>
 <div class="office-container">
