@@ -193,179 +193,6 @@ include_once 'header.php';
 
 <script src="../assets/js/cdn.js"></script>
 
-<!-- <script>
-        //jquery onclick event for update button
-        $(document).on("click", '#active', function(){
-            let rows_selected = table.column(0).checkboxes.selected();
-            let list_student_id = [];
-            let list_inputs = $('.row')
-            list_inputs.map((index,elem,arr) => {
-                let is_check = $(elem).prop("checked")
-                if(is_check == true ){
-                    list_student_id.push($(elem).attr("student_id"))
-                }
-            });
-            console.log(list_student_id);
-            $.ajax({
-                url: "student_update_status.php",
-                method: "POST",
-                data: {
-                    list_student_id:list_student_id,
-                    status:'Active'
-                },
-                success: (response) =>{
-                    $("#checkAll").prop("checked",false);
-                    $('#example').DataTable().ajax.reload();
-                }
-            })
-        });
-    </script>
-
-        <script>
-            //jquery onclick event for update button
-            $(document).on("click", '#inactive', function(){
-                let rows_selected = table.column(0).checkboxes.selected();
-                let list_student_id = [];
-                let list_inputs = $('.row')
-                list_inputs.map((index,elem,arr) => {
-                    let is_check = $(elem).prop("checked")
-                    if(is_check == true ){
-                        list_student_id.push($(elem).attr("student_id"))
-                    }
-                });
-                console.log(list_student_id);
-                $.ajax({
-                    url: "student_inactive_status.php",
-                    method: "POST",
-                    data: {
-                        list_student_id:list_student_id,
-                        status:'Inactive'
-                    },
-                    success: (response) =>{
-                        $("#checkAll").prop("checked",false);
-                        $('#example').DataTable().ajax.reload();
-                        
-                    }
-                })
-            });
-
-        </script>
-        
-
-<script>
-        //jquery onclick event for update button
-        $(document).on("click", '#1st_year', function(){
-            let rows_selected = table.column(0).checkboxes.selected();
-            let list_student_id = [];
-            let list_inputs = $('.row')
-            list_inputs.map((index,elem,arr) => {
-                let is_check = $(elem).prop("checked")
-                if(is_check == true ){
-                    list_student_id.push($(elem).attr("student_id"))
-                }
-            });
-            console.log(list_student_id);
-            $.ajax({
-                url: "student_1st.php",
-                method: "POST",
-                data: {
-                    list_student_id:list_student_id,
-                    student_year:'1st Year'
-                },
-                success: (response) =>{
-                    $("#checkAll").prop("checked",false);
-                    $('#example').DataTable().ajax.reload();
-                }
-            })
-        });
-    </script> -->
-
-<!-- <script>
-        //jquery onclick event for update button
-        $(document).on("click", '#2nd_year', function(){
-            let rows_selected = table.column(0).checkboxes.selected();
-            let list_student_id = [];
-            let list_inputs = $('.row')
-            list_inputs.map((index,elem,arr) => {
-                let is_check = $(elem).prop("checked")
-                if(is_check == true ){
-                    list_student_id.push($(elem).attr("student_id"))
-                }
-            });
-            console.log(list_student_id);
-            $.ajax({
-                url: "student_2nd.php",
-                method: "POST",
-                data: {
-                    list_student_id:list_student_id,
-                    student_year:'2nd Year'
-                },
-                success: (response) =>{
-                    $("#checkAll").prop("checked",false);
-                    $('#example').DataTable().ajax.reload();
-                }
-            })
-        });
-    </script> -->
-
-<!-- <script>
-        //jquery onclick event for update button
-        $(document).on("click", '#3rd_year', function(){
-            let rows_selected = table.column(0).checkboxes.selected();
-            let list_student_id = [];
-            let list_inputs = $('.row')
-            list_inputs.map((index,elem,arr) => {
-                let is_check = $(elem).prop("checked")
-                if(is_check == true ){
-                    list_student_id.push($(elem).attr("student_id"))
-                }
-            });
-            console.log(list_student_id);
-            $.ajax({
-                url: "student_2nd.php",
-                method: "POST",
-                data: {
-                    list_student_id:list_student_id,
-                    student_year:'3rd Year'
-                },
-                success: (response) =>{
-                    $("#checkAll").prop("checked",false);
-                    $('#example').DataTable().ajax.reload();
-                }
-            })
-        });
-    </script> -->
-
-<script>
-    //jquery onclick event for update button
-    // $(document).on("click", '#4th_year', function(){
-    //     let rows_selected = table.column(0).checkboxes.selected();
-
-    //     console.log(rows_selected);
-    //     return
-    //     let list_student_id = [];
-    //     let list_inputs = $('.row')
-    //     list_inputs.map((index,elem,arr) => {
-    //         let is_check = $(elem).prop("checked")
-    //         if(is_check == true ){
-    //             list_student_id.push($(elem).attr("student_id"))
-    //         }
-    //     });
-    //     console.log(list_student_id);
-    //     $.ajax({
-    //         url: "student_2nd.php",
-    //         method: "POST",
-    //         data: {
-    //             list_student_id:list_student_id,
-    //             student_year:'4th Year'
-    //         },
-    //         success: (response) =>{
-    //             $("#checkAll").prop("checked",false);
-    //             $('#example').DataTable().ajax.reload();
-    //         }
-    //     })
-    // });
-</script>
 
 <script>
     $(document).ready(function() {
@@ -381,30 +208,6 @@ include_once 'header.php';
     })
 </script>
 
-<!-- <script type="text/javascript">
-            $(document).ready(function(){
-                // Check/Uncheck ALl
-                $('#checkAll').change(function(){
-                    if($(this).is(':checked')){
-                        $('input[name="update[]"]').prop('checked',true);
-                    }else{
-                        $('input[name="update[]"]').each(function(){
-                            $(this).prop('checked',false);
-                        }); 
-                    }
-                });
-                // Checkbox click
-                $('input[name="update[]"]').click(function(){
-                    var total_checkboxes = $('input[name="update[]"]').length;
-                    var total_checkboxes_checked = $('input[name="update[]"]:checked').length;
-                    if(total_checkboxes_checked == total_checkboxes){
-                        $('#checkAll').prop('checked',true);
-                    }else{
-                        $('#checkAll').prop('checked',false);
-                    }
-                });
-            }); 
-        </script> -->
 
 <script>
     $(document).ready(function() {
@@ -458,60 +261,7 @@ include_once 'header.php';
             }
         });
 
-        // $(document).on("click", '#bulk-clearance', function() {
-        //     let clearance_progress_id = $("#clearance_progress_id").val();
-        //     let clearance_type_id = $("#clearance_type_id").val();
-        //     let rows_selected = table.column(0).checkboxes.selected();
-
-        //     // console.log(rows_selected);
-        //     // return
-
-        //     let list_student_id = [];
-        //     // let list_inputs = $('.row')
-
-        //     rows_selected.map((elem) => {
-        //         // console.log($(elem).children("input").prop("student_id"));
-        //         list_student_id.push($(elem).children("input").attr("student_id"))
-
-        //     })
-
-        //     // console.log(list_student_id);
-        //     // return
-        //     $.ajax({
-        //         url: "clearance_bulk.php",
-        //         method: "POST",
-        //         data: {
-        //             list_student_id: list_student_id,
-        //             clearance_progress_id: clearance_progress_id,
-        //             clearance_type_id: clearance_type_id,
-        //             clearance_status: '1'
-        //         },
-        //         success: (response) => {
-        //             if (response === "existed") {
-        //                 alert(response)
-        //                 // Swal.fire(
-        //                 //     'Error',
-        //                 //     'Clearance already existed.',
-        //                 //     'error'
-        //                 // ).then((result) => {
-        //                 //     if (result.isConfirmed) {
-        //                 //         location.reload(); // Reload the page
-        //                 //     }
-        //                 // });
-        //             } else {
-        //                 // $("#checkAll").prop("checked", false);
-        //                 // $('#example').DataTable().ajax.reload();
-        //                 // table.columns().checkboxes.deselect(true);
-        //                 location.reload();
-        //             }
-        //         }
-        //     });
-
-
-        //     // location.reload();
-        // });
-
-
+        
         $(document).on("click", '#bulk-clearance', function() {
             let loads = document.querySelector(".loads")
             loads.classList.add("loaders");
@@ -600,6 +350,7 @@ include_once 'header.php';
                 }
             })
         });
+
         $(document).on("click", '#inactive', function() {
             let rows_selected = table.column(0).checkboxes.selected();
 
@@ -631,6 +382,7 @@ include_once 'header.php';
                 }
             })
         });
+        
         $(document).on("click", '#1st_year', function() {
             let rows_selected = table.column(0).checkboxes.selected();
 
@@ -758,13 +510,11 @@ include_once 'header.php';
     });
 </script>
 
-<!-- <script src="../assets/js/student-info.js"></script> -->
 
-<!-- <script defer src="../assets/js//modal.js"></script> -->
 <script src="../assets/js/index.js"></script>
 <script defer src="../assets/js/active.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- <script src="../assets/js/update.js"></script> -->
+
 
 
 <script>

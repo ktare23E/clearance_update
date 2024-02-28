@@ -46,9 +46,9 @@ $requirements = $db->query('SELECT * FROM requirement_view WHERE officer_require
                                 <td><?= $requirement->clearance_type_name; ?></td>
                                 <td><?= $requirement->school_year_and_sem . ' ' . $requirement->sem_name; ?></td>
                                 <td class='primary table-action-container'>
-                                    <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$requirement->requirement_details; ?>','edit-requirement-modal')">Edit</button>
+                                    <button class="view-link" style="background-color: skyblue;" onclick="getRequirements('<?=$encodedValue; ?>','edit-requirement-modal')">Edit</button>
                                     <a class='view-link' href='required_students_view.php?requirement_details="<?= $encodedValue; ?>"&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>&clearance_type_id=<?= $requirement->clearance_type_id; ?>'>Required Students</a>
-                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $encodedValue; ?>&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>">Students No requirements</a>
+                                    <a class="view-link" style="background:black;" href="student_list_no_requirements_view.php?requirement_details=<?= $requirement->requirement_details; ?>&clearance_progress_id=<?= $requirement->clearance_progress_id; ?>">Students No requirements</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

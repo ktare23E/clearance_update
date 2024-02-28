@@ -6,6 +6,8 @@ include_once 'office_header.php';
 if (!isset($_GET['requirement_details'])) {
     echo "<h1>There's an error while viewing details.</h1>";
 } else {
+    echo $_GET['requirement_details'];
+    die();
     $requirement_details = $_GET['requirement_details'];
     $clearance_progress_id = $_GET['clearance_progress_id'];
     $clearance_type_id = $_GET['clearance_type_id'];

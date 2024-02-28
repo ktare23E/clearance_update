@@ -49,7 +49,7 @@
                         </div>
                         <span class="title">Add New Student</span>
         
-                        <form action="insert_student.php" method="POST" enctype="multipart/form-data" enctype="multipart/form-data">
+                        <form action="insert_student.php" method="POST" enctype="multipart/form-data">
                             <div class="input-field">
                                     <input type="text" placeholder="Student Id" name="student_id" required>
                                     <i class="uil uil-keyhole-circle icon"></i>
