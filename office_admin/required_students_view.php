@@ -6,8 +6,7 @@ include_once 'office_header.php';
 if (!isset($_GET['requirement_details'])) {
     echo "<h1>There's an error while viewing details.</h1>";
 } else {
-    echo $_GET['requirement_details'];
-    die();
+
     $requirement_details = $_GET['requirement_details'];
     $clearance_progress_id = $_GET['clearance_progress_id'];
     $clearance_type_id = $_GET['clearance_type_id'];
@@ -23,11 +22,7 @@ if (!isset($_GET['requirement_details'])) {
     
     $status = $rowRetrieveClearanceProgressStatus['status'];
 
-    $retrieveSigningOfficeId = "SELECT * FROM signing_office WHERE clearance_type_id = $clearance_type_id AND clearance_progress_id = $clearance_progress_id";
-    $runRetrieveSigningOfficeId = mysqli_query($conn, $retrieveSigningOfficeId);
-    $rowRetrieveSigningOfficeId = mysqli_fetch_assoc($runRetrieveSigningOfficeId);
 
-    $signing_office_id = $rowRetrieveSigningOfficeId['signing_office_id'];
 }
 
 
@@ -173,14 +168,6 @@ if (!isset($_GET['requirement_details'])) {
             });
 
         });
-
-        $(document).on('click', '#checkAll', function() {
-            let rows_selected = table.column(0).checkboxes.selected();
-            console.log(rows_selected);
-            rows_selected.map(function(elem) {
-                console.log(elem);
-            });
-        })
 
         $(document).on("click","#remove-student", function(){
             let requirement_details = <?= $requirement_details; ?>;
