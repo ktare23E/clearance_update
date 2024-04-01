@@ -1,7 +1,8 @@
 <?php
 
 require ('../dbconnect.php');
-include_once 'phpmailer2.php';
+// include_once 'phpmailer2.php';
+include_once 'phpmailer.php';
 include_once '../connection.php';
 
 
@@ -28,20 +29,20 @@ $data = array(
 
 $insert = $db->insert('signing_office', $data);
 
-// $conn = mysqli_connect('localhost', 'root', '', 'clearance');
+$conn = mysqli_connect('localhost', 'root', '', 'clearance');
 
 
-// $sql = "SELECT * FROM new_signing_offices WHERE office_id = '$office_id'";
-// $result = mysqli_query($conn,$sql);
-// $row = mysqli_fetch_assoc($result);
+$sql = "SELECT * FROM new_signing_offices WHERE office_id = '$office_id'";
+$result = mysqli_query($conn,$sql);
+$row = mysqli_fetch_assoc($result);
 
-// $office_email = $row['office_email'];
-// $clearance_type_name = $row['clearance_type_name'];
-// $sem_name = $row['sem_name'];
-// $school_year_and_sem = $row['school_year_and_sem'];
-// $clearance = strtolower($clearance_type_name);
+$office_email = $row['office_email'];
+$clearance_type_name = $row['clearance_type_name'];
+$sem_name = $row['sem_name'];
+$school_year_and_sem = $row['school_year_and_sem'];
+$clearance = strtolower($clearance_type_name);
 
-// sendEmail($office_email,"Clearance System Role Update","You have been set as a signing office of <b>$clearance</b> clearance type in school year <b>$school_year_and_sem $sem_name</b>.");
+sendEmail($office_email,"Clearance System Role Update","You have been set as a signing office of <b>$clearance</b> clearance type in school year <b>$school_year_and_sem $sem_name</b>.");
 
 if ($db->affected_rows >= 0) {
     header("location: signing_office.php");
