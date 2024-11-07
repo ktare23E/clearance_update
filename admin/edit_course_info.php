@@ -3,7 +3,7 @@
     include_once '../connection.php';
 
 
-    if(!isset($_GET['edit'])){
+    if(isset($_GET['edit'])){
         echo "<h1>There's an error while viewing details.</h1>";
     }else{
         $id = $_GET['edit'];

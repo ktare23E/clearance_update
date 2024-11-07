@@ -8,11 +8,16 @@ if (!isset($_GET['requirement_details'])) {
 } else {
 
     $requirement_details = $_GET['requirement_details'];
+    $requirement_details_second = isset($_GET['requirement_details']) ? json_decode($_GET['requirement_details']) : '';
+    $requirement_details_second = str_replace(["\r", "\n"], ' ', $requirement_details_second);
+
     $clearance_progress_id = $_GET['clearance_progress_id'];
     $clearance_type_id = $_GET['clearance_type_id'];
 
     $_SESSION['requirement_details'] = $requirement_details;
     $_SESSION['clearance_progress_id'] = $clearance_progress_id;
+
+
 
 
 
@@ -37,7 +42,7 @@ if (!isset($_GET['requirement_details'])) {
     <div class="office-main-container">
         <div class="first-div-container">
             <div>
-                <p style="font-size: 2.5rem;">Students who received <b><?= $requirement_details; ?></b> requirement.</p>
+            <p style="font-size: 2.5rem;">Students who received <b><?= $requirement_details_second; ?></b> requirement.</p>
             </div>
         </div>
 
