@@ -76,7 +76,7 @@
                                     <td><?= $user->course_status; ?></td>
                                     <td><?= $user->office_name; ?></td>
                                     <td class="primary table-action-container">
-                                        <a href="edit_course_info.php?edit=<?= $user->course_id; ?>" class="update-link">Edit</a>
+                                        <a href="edit_course_info.php?course_id=<?= $user->course_id; ?>" class="update-link">Edit</a>
                                         <a href="course_view.php?details=<?= $user->course_id; ?>" class="view-link">View Details</a>
                                             <!-- <input type="hidden" name="student_id" value="<?= $user->student_id; ?>"> -->
                                             <!-- <button type="submit" class="danger delete" name="delete" data-id="<?= $user->student_id; ?>">

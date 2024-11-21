@@ -66,7 +66,7 @@
                             </a>
                             
                         </div>
-                        <span class="title">Add New Office</span>
+                        <span class="title">Add New Office tabibina</span>
         
                         <form action="insert_office.php" method="POST">
                             <div class="input-field-container">

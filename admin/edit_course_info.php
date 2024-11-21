@@ -3,10 +3,10 @@
     include_once '../connection.php';
 
 
-    if(isset($_GET['edit'])){
+    if(!isset($_GET['course_id'])){
         echo "<h1>There's an error while viewing details.</h1>";
     }else{
-        $id = $_GET['edit'];
+        $id = $_GET['course_id'];
         $sql = "SELECT * FROM course_view WHERE course_id = '$id'";
         $result = mysqli_query($conn,$sql);
         $row = mysqli_fetch_assoc($result);

@@ -52,7 +52,7 @@
                         <input type="submit" value="Login"> <!-- LOGIN BUTTON -->
                     </div>
                     <?php if (isset($_GET['a']) && $_GET['a'] == 'error'): ?>
-                            <div class="danger">
+                            <div class="danger" style="color:red">
                                 Incorrect username or password.
                             </div>        
                     <?php endif; ?>
