@@ -44,7 +44,7 @@
                         } ?></h3>
                     </div>
                     <button id="open-change-profile">Change Profile</button>
-                    <form class="upload-profile-pic" action="update_profile.php" method="post" enctype="multipart/form-data">
+                    <form class="upload-profile-pic" action="update_profile.php" method="POST" enctype="multipart/form-data">
                         <label for="">Change profile image:</label>
                         <input type="file" id="profile-image-input" name="profile_image" accept="image/*" />
                         <button type="submit">Update Profile</button>
