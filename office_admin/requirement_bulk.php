@@ -81,6 +81,8 @@
                         'clearance_type_id' => $clearance_type_id,
                         'requirement_details' => $requirement_details2,
                         'signing_office_id' => $signing_office_id,
+                        'officer_requirement' => $officer_requirement,
+
                     );
                     $insert = $db->insert('requirement', $data2);
 
@@ -106,6 +108,8 @@
                         'clearance_type_id' => $clearance_type_id,
                         'requirement_details' => $requirement_details3,
                         'signing_office_id' => $signing_office_id,
+                        'officer_requirement' => $officer_requirement,
+
                     );
                     $insert = $db->insert('requirement', $data3);
 
