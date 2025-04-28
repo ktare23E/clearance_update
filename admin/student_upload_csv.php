@@ -102,7 +102,7 @@ if (isset($_POST['import'])) {
                 }
             } else {
                 // Insert new student data
-                $sqlInsert = "INSERT into student (student_id, student_first_name, student_middle_name, student_last_name,student_year, course_id, student_gender,student_email, student_password,student_status, student_type,office_id) VALUES ('".$column[0]."','" .addslashes($column[1]). "','" .addslashes($column[2]). "','" .addslashes($column[3]). "','" .$year_level. "','" .$column[5]. "', '" .$column[6]. "', '" .addslashes($column[7]). "', '" .addslashes($column[8]). "','" .$column[9]. "','".$column[10]."','" .$office_id. "')";
+                $sqlInsert = "INSERT INTO student (student_id, student_first_name, student_middle_name, student_last_name,student_year, course_id, student_gender,student_email, student_password,student_status, student_type,office_id) VALUES ('".$column[0]."','" .addslashes($column[1]). "','" .addslashes($column[2]). "','" .addslashes($column[3]). "','" .$year_level. "','" .$column[5]. "', '" .$column[6]. "', '" .addslashes($column[7]). "', '" .addslashes($column[8]). "','" .$column[9]. "','".$column[10]."','" .$office_id. "')";
                 $result2 = mysqli_query($conn, $sqlInsert);
 
                 
