@@ -13,7 +13,29 @@ $row = mysqli_fetch_array($result);
 
 $is_department = $row['is_department'];
 
-
+if (isset($_GET['success']) && $_GET['success'] === 'true') {
+    echo "<script>
+        Swal.fire({
+            title: 'Success!',
+            text: 'Bulk Requirement Via CSV successfully imported.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(()=>{
+            location.href = './office_clearance.php';
+        });
+    </script>";
+}else if(isset($_GET['updated']) && $_GET['updated'] === 'true'){
+    echo "<script>
+    Swal.fire({
+        title: 'Success!',
+        text: 'Bulk Requirement Via CSV successfully imported/updated.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        location.href = './office_clearance.php';
+    });
+</script>";
+}
 
 ?>
 <div class="office-container">

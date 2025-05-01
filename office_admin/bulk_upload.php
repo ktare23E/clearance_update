@@ -5,6 +5,8 @@ include_once '../connection.php';
 session_start();
 
 $is_department = $_SESSION['is_department'];
+$is_officer = $_SESSION['is_officer'];
+
 
 if(isset($_POST['import'])){
     $fileName = $_FILES['file']['tmp_name'];
@@ -19,10 +21,8 @@ if(isset($_POST['import'])){
                 $office_id = $_SESSION['office_id'];
                 $clearance_progress_id = $_POST['clearance_progress_id'];
 
-                // echo $clearance_progress_id;
-                // die();
 
-                $query2 = "SELECT * FROM view_clearance WHERE student_id = '".$column[1]."' AND clearance_progress_id = $clearance_progress_id";
+                $query2 = "SELECT * FROM clearance WHERE student_id = '".$column[1]."' AND clearance_progress_id = $clearance_progress_id";
                 $clearance = $conn->query($query2) or die($conn->error);
                 $row = $clearance->fetch_assoc();
 
@@ -31,8 +31,7 @@ if(isset($_POST['import'])){
                     echo "This student " .$column[1]. " doesn't have a clearance yet for this semester and school year that you selected.</br>";
                     die();
                 }
-                $school_year_and_sem = $row['school_year_and_sem'];
-                $sem_name = $row['sem_name'];
+        
                 $clearance_id = $row['clearance_id'];
                 $clearance_type_id = $row['clearance_type_id'];
                 
@@ -54,8 +53,7 @@ if(isset($_POST['import'])){
                     echo "This student '".$column[1]."' has no clearance for these school year and semester and clearance type that you've been selected.";
                 }
             
-                $sqlUpdate = "UPDATE clearance SET clearance_status = '0' WHERE clearance_id = $clearance_id AND clearance_progress_id = $clearance_progress_id";
-                $update = $conn->query($sqlUpdate);
+          
 
                 $sqlView = "SELECT * FROM signing_office WHERE office_id = $office_id";
                 $signing_office = $conn->query($sqlView) or die($conn->error);
@@ -76,28 +74,37 @@ if(isset($_POST['import'])){
                 // Check if the requirement already exists in the database
 
 
-                    $sqlCheck = "SELECT * FROM requirement WHERE requirement_details = '".$column[0]."' AND student_id = '".$column[1]."' AND clearance_type_id = '".$clearance_type_id."' AND signing_office_id = '".$signing_office_id."' AND clearance_progress_id = '".$clearance_progress_id."'";
-                    $resultCheck = mysqli_query($conn, $sqlCheck);
+                $sqlCheck = "SELECT * FROM requirement WHERE requirement_details = '".$column[0]."' AND student_id = '".$column[1]."' AND clearance_type_id = '".$clearance_type_id."' AND signing_office_id = '".$signing_office_id."' AND clearance_progress_id = '".$clearance_progress_id."'";
+                $resultCheck = mysqli_query($conn, $sqlCheck);
 
 
-                // if($resultCheck->num_rows > 0){
-                // // If requirement exists, update the requirement details
-                //     $sqlUpdateReq = "UPDATE requirement SET requirement_details = '".addslashes($column[0])."' WHERE requirement_details = '".$column[0]."' AND student_id = '".$column[1]."' AND clearance_type_id = '".$clearance_type_id."' AND signing_office_id = '".$signing_office_id."' AND clearance_progress_id = '".$clearance_progress_id."'";
-                //     $resultUpdateReq = mysqli_query($conn, $sqlUpdateReq);
-                //     if(!$resultUpdateReq){
-                //     echo "Error updating requirement: " . mysqli_error($conn);
-                //     die();
-                // }
-                //}
-                //  else {
+                if($resultCheck->num_rows > 0){
+                // If requirement exists, update the requirement details
+                    $sqlUpdateReq = "UPDATE requirement SET requirement_details = '".addslashes($column[0])."' WHERE requirement_details = '".$column[0]."' AND student_id = '".$column[1]."' AND clearance_type_id = '".$clearance_type_id."' AND signing_office_id = '".$signing_office_id."' AND clearance_progress_id = '".$clearance_progress_id."'";
+                    $resultUpdateReq = mysqli_query($conn, $sqlUpdateReq);
+
+                    if(!$resultUpdateReq){
+                        echo "Error updating requirement: " . mysqli_error($conn);
+                        die();
+                    }
+                    header('location:./office_clearance.php?updated=true');
+
+
+                }else {
                 // If requirement does not exist, insert new requirement
-                    $sqlInsert = "INSERT INTO requirement (requirement_details, student_id, clearance_type_id, signing_office_id, clearance_progress_id) VALUES ('".addslashes($column[0])."','".addslashes($column[1])."',$clearance_type_id,$signing_office_id,$clearance_progress_id)";
+                    $sqlInsert = "INSERT INTO requirement (requirement_details, student_id, clearance_type_id, signing_office_id, clearance_progress_id,officer_requirement) VALUES ('".addslashes($column[0])."','".addslashes($column[1])."',$clearance_type_id,$signing_office_id,$clearance_progress_id,'$is_officer')";
                     $resultInsert = mysqli_query($conn, $sqlInsert);
+
                     if(!$resultInsert){
                         echo "Error inserting requirement: " . mysqli_error($conn);
                         die();
                     }
-                // }
+
+                    $sqlUpdate = "UPDATE clearance SET clearance_status = '0' WHERE clearance_id = $clearance_id AND clearance_progress_id = $clearance_progress_id";
+                    $update = $conn->query($sqlUpdate);
+
+                    header('location:./office_clearance.php?success=true');
+                }
 
                 // if(mysqli_affected_rows($conn) > 0){
                 // header("Location:office_requirements.php");

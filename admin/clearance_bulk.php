@@ -80,13 +80,13 @@
 
 
     // Loop through the $emails array in chunks
-    for ($i = 0; $i < count($emails); $i += $chunk_size) {
-        // Get a subset of the $emails array
-        $email_chunk = array_slice($emails, $i, $chunk_size);
+    // for ($i = 0; $i < count($emails); $i += $chunk_size) {
+    //     // Get a subset of the $emails array
+    //     $email_chunk = array_slice($emails, $i, $chunk_size);
 
-        // Send the emails in the current chunk
-        sendEmail($email_chunk, "Online Clearance System", "Your clearance for $school_year_and_sem $sem_name is now created please view your account to see the requirements of each signing offices. This is for testing purposes.");
-    }
+    //     // Send the emails in the current chunk
+    //     sendEmail($email_chunk, "Online Clearance System", "Your clearance for $school_year_and_sem $sem_name is now created please view your account to see the requirements of each signing offices. This is for testing purposes.");
+    // }
 
     // sendEmail($emails,"Online Clearance System","Your clearance for $school_year_and_sem $sem_name is now created please view your account to see the requirements of each signing offices. This is for testing purposes.");
 
