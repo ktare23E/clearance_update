@@ -1,6 +1,6 @@
 <?php
     include_once '../connection.php';
-    require ('phpmailer2.php');
+    // require ('phpmailer2.php');
 
 if(isset($_POST['approve'])){
         $clearance_type_id = $_POST['clearance_type_id'];
@@ -56,12 +56,13 @@ if(isset($_POST['approve'])){
             $school_year_and_sem = $row['school_year_and_sem'];
             $clearance = strtolower($clearance_type_name);
 
-            sendEmail($student_email,"Clearance System Role Update","Your clearance for $clearance_type_name in $school_year_and_sem $sem_name is now cleared as of $cleared_date.");
+            // sendEmail($student_email,"Clearance System Role Update","Your clearance for $clearance_type_name in $school_year_and_sem $sem_name is now cleared as of $cleared_date.");
         }
 }
 
         if($result){
-            header("Location:office_clearance_view.php?clearance_type_id=".$clearance_type_id."&clearance_progress_id=".$clearance_progress_id."&student_id=".$student_id."");
+            // header("Location:./office_clearance_view.php?clearance_type_id=".$clearance_type_id."&clearance_progress_id=".$clearance_progress_id."&student_id=".$student_id."");
+            header("Location:./office_clearance_view.php?student_id=".$student_id."&clearance_type_id=".$clearance_type_id."&clearance_progress_id=".$clearance_progress_id);
         }else{
             echo "Error Updating";
         }
